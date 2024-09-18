@@ -273,34 +273,34 @@ def main():
     page_holder = st.empty()
     
     # Create our own prompt template
-    #prompt_template = """Text: {context}
+    prompt_template = """Text: {context}
     
-    #Question: {question}
+    Question: {question}
     
-    #Answer the question based on the text provided. If asked for summarization then look to the whole document and summarize it """
+    Answer the question based on the text provided. If asked for summarization then look to the whole document and summarize it """
     
-    #PROMPT = PromptTemplate(
-    #    template=prompt_template, input_variables=["context", "question"]
-    #)
+    PROMPT = PromptTemplate(
+        template=prompt_template, input_variables=["context", "question"]
+    )
     
-    #print("%OP% the final Prompt is --------------------->")
-    #print(PROMPT)
-    #chain_type_kwargs = {"prompt": PROMPT}
+    print("%OP% the final Prompt is --------------------->")
+    print(PROMPT)
+    chain_type_kwargs = {"prompt": PROMPT}
     
     
     # Bot UI dump
     # Session State Initiation
     prompt = st.session_state.get("prompt", None)
     
-    #if prompt is None:
-    #    prompt = [{"role": "system", "content": prompt_template}]
+    if prompt is None:
+        prompt = [{"role": "system", "content": prompt_template}]
     
     # If we have a message history, let's display it
-    #for message in prompt:
-    #    if message["role"] == "user":
-    #        user_message(message["content"])
-    #    elif message["role"] == "assistant":
-    #        bot_message(message["content"], bot_name="AI Bot")
+    for message in prompt:
+        if message["role"] == "user":
+            user_message(message["content"])
+        elif message["role"] == "assistant":
+            bot_message(message["content"], bot_name="AI Bot")
     
     if pages:
         # if uploaded_file.name.endswith(".txt"):
@@ -328,9 +328,9 @@ def main():
         # question = question + prompt_token_input
     
         if st.button("Run", type="secondary"):
-            #prompt.append({"role": "user", "content": originalQuestion})
+            prompt.append({"role": "user", "content": originalQuestion})
             print("%OP% the main prompt is --->")
-            # print(PROMPT)
+            print(PROMPT)
             with messages_container:
                 user_message(originalQuestion)
                 botmsg = bot_message("...", bot_name="Chat Bot")
